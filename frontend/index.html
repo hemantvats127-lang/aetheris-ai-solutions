@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetheris AI | Luxury Real Estate Concierge</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <header class="navbar">
+        <div class="logo">AETHERIS <span>REAL ESTATE</span></div>
+        <div class="status-badge"><span class="pulse"></span> AI Concierge Active</div>
+    </header>
+
+    <main class="hero-container">
+        <div class="hero-content">
+            <span class="tagline">EXCLUSIVITY REDEFINED</span>
+            <h1>Find Your Dream Luxury Estate in HCMC</h1>
+            <p>Experience personalized AI consultation for Saigon’s most elite properties, penthouses, and private villas.</p>
+        </div>
+
+        <div class="chat-wrapper">
+            <div class="chat-header">
+                <div class="avatar">🏛️</div>
+                <div class="agent-info">
+                    <h3>Aetheris Private Advisory</h3>
+                    <p>Instant High-Net-Worth Concierge</p>
+                </div>
+            </div>
+            
+            <div class="chat-box" id="chatBox">
+                <div class="message ai-message">
+                    Welcome to Aetheris. Are you looking to acquire a luxury villa or apartment in HCMC? Tell me your preferred budget and ideal location.
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="userInput" placeholder="Type your requirements..." onkeypress="handleKeyPress(event)">
+                <button id="sendBtn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
