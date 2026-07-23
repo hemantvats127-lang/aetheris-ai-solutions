@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:5000/chat"; // Local test ke liye
+const API_URL = "https://aetheris-ai-solutions.onrender.com/chat" // Local test ke liye
 let conversationHistory = [];
 
 async function sendMessage() {
