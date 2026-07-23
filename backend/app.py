@@ -1,3 +1,14 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+captured_leads = []
+
+def trigger_crm_automation(lead):
+    print("CRM Automation Triggered for:", lead)
+
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
@@ -19,16 +30,7 @@ def chat():
                 "assigned_agent": assigned_agent,
                 "automation_status": "Auto-Dispatched to CRM & WhatsApp Webhook",
                 "timestamp": "Real-time Sync"
-            }
+            }  
 
-            trigger_crm_automation(lead_entry)
-            captured_leads.append(lead_entry)
 
-        # AI Reply Logic (Tumhara existing Groq/Llama call)
-        # ai_reply = ... 
 
-        return jsonify({"reply": ai_reply})
-
-    except Exception as e:
-        print("Error in /chat:", e)  # Render logs me error dikhega
-        return jsonify({"reply": "I apologize, our VIP server connection is refreshing. How may I assist your query?"}), 500
