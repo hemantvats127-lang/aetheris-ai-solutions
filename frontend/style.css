@@ -1,212 +1,56 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+/* Custom CSS for Aetheris AI Solutions Owner Suite */
+
+@layer utilities {
+  /* Smooth Custom Scrollbar for Luxury Aesthetics */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #020617; /* slate-950 */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b; /* slate-800 */
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f59e0b; /* amber-500 */
+  }
 }
 
+/* Background Subtle Gradient Overlay */
 body {
-    background-color: #0b0f19;
-    color: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow-x: hidden;
+  background-color: #020617;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
-.background-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.08) 0%, rgba(11, 15, 25, 1) 70%);
-    z-index: -1;
+/* Glassmorphism Card Hover Effects */
+.border-slate-800 {
+  transition: border-color 0.3s ease, transform 0.2s ease;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 5%;
+.border-slate-800:hover {
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
-.logo {
-    font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #d4af37;
+/* Table Row Smooth Selection */
+tbody tr {
+  transition: background-color 0.2s ease-in-out;
 }
 
-.logo span {
-    font-size: 0.8rem;
-    color: #a0aab8;
-    display: block;
-    letter-spacing: 4px;
+/* Pulse Glow Animation for Aetheris Active Status */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(52, 211, 153, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(52, 211, 153, 0.8);
+  }
 }
 
-.status-badge {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: #d4af37;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.pulse {
-    width: 8px;
-    height: 8px;
-    background-color: #d4af37;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #d4af37;
-}
-
-.hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 5%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    flex-grow: 1;
-}
-
-.tagline {
-    color: #d4af37;
-    font-size: 0.85rem;
-    letter-spacing: 3px;
-    font-weight: 600;
-}
-
-.hero-content h1 {
-    font-family: 'Cinzel', serif;
-    font-size: 2.8rem;
-    line-height: 1.2;
-    margin: 1rem 0;
-}
-
-.hero-content p {
-    color: #a0aab8;
-    line-height: 1.6;
-}
-
-.chat-wrapper {
-    background: rgba(20, 26, 40, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 16px;
-    backdrop-filter: blur(12px);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
-
-.chat-header {
-    background: rgba(15, 20, 32, 0.8);
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.avatar {
-    font-size: 1.5rem;
-    background: rgba(212, 175, 55, 0.15);
-    padding: 8px;
-    border-radius: 50%;
-}
-
-.agent-info h3 {
-    font-size: 0.95rem;
-    color: #ffffff;
-}
-
-.agent-info p {
-    font-size: 0.75rem;
-    color: #a0aab8;
-}
-
-.chat-box {
-    flex-grow: 1;
-    padding: 1.5rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.message {
-    max-width: 80%;
-    padding: 0.8rem 1.2rem;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.ai-message {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e2e8f0;
-    align-self: flex-start;
-    border-bottom-left-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.user-message {
-    background: #d4af37;
-    color: #0b0f19;
-    align-self: flex-end;
-    border-bottom-right-radius: 2px;
-    font-weight: 500;
-}
-
-.chat-input-area {
-    padding: 1rem;
-    display: flex;
-    gap: 10px;
-    background: rgba(15, 20, 32, 0.8);
-}
-
-input[type="text"] {
-    flex-grow: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    color: #ffffff;
-    outline: none;
-}
-
-input[type="text"]:focus {
-    border-color: #d4af37;
-}
-
-button {
-    background: #d4af37;
-    color: #0b0f19;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-button:hover {
-    background: #f3cf55;
-}
-
-@media (max-width: 900px) {
-    .hero-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
