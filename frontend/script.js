@@ -102,6 +102,50 @@ async function fetchLegalData() {
   }
 }
 
+async function fetchOutreachData() {
+  try {
+    const response = await fetch(`${BASE_URL}/outreach`);
+    const data = await response.json();
+
+    if (data.success && data.logs) {
+      const outreachCountEl = document.getElementById('stat-outreach-count');
+      if (outreachCountEl) outreachCountEl.innerText = `${data.active_conversations} Active`;
+
+      const outreachTable = document.getElementById('outreachTable');
+      if (outreachTable) {
+        outreachTable.innerHTML = data.logs.map(log => `
+          <tr class="hover:bg-slate-900/80">
+            <td class="p-3 font-semibold text-slate-100">${log.client}</td>
+            <td class="p-3 text-xs font-medium text-indigo-300">${log.channel}</td>
+            <td class="p-3 text-xs text-slate-400 max-w-xs truncate">${log.last_msg}</td>
+            <td class="p-3 text-xs font-bold text-amber-400">${log.intent}</td>
+            <td class="p-3 text-xs font-bold text-emerald-400">${log.status}</td>
+          </tr>
+        `).join('');
+      }
+    }
+  } catch (err) {
+    console.error("Outreach Engine fetch error:", err);
+  }
+}
+
+async function triggerNewOutreach() {
+  try {
+    const res = await fetch(`${BASE_URL}/outreach/trigger`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client: "Sheikh Mansoor", channel: "Voice AI Agent 📞" })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("📲 AI VOICE CALL & WHATSAPP FOLLOW-UP INITIATED!");
+      fetchOutreachData();
+    }
+  } catch (err) {
+    alert("Outreach trigger failed.");
+  }
+}
+
 async function runNewAudit() {
   try {
     const res = await fetch(`${BASE_URL}/legal/verify`, {
@@ -176,3 +220,4 @@ async function submitLead(e) {
 fetchLeadsData();
 fetchSafetyData();
 fetchLegalData();
+fetchOutreachData();
