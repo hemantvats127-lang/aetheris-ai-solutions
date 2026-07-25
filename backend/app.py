@@ -1,24 +1,28 @@
-# 5. MODULE 5: EXECUTIVE REVENUE & DEAL ANALYTICS DATASET
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+# Dummy / Initial Database for Module 5 & Module 6
 revenue_db = [
-    {"id": 801, "region": "UAE 🇦🇪", "forecast_rev": "$1,200,000", "broker_split": "70%", "agent_split": "30%", "deals_closed": 12},
-    {"id": 802, "region": "USA 🇺🇸", "forecast_rev": "$850,000", "broker_split": "60%", "agent_split": "40%", "deals_closed": 8},
-    {"id": 803, "region": "India 🇮🇳", "forecast_rev": "$600,000", "broker_split": "75%", "agent_split": "25%", "deals_closed": 15},
-    {"id": 804, "region": "Vietnam 🇻🇳", "forecast_rev": "$450,000", "broker_split": "65%", "agent_split": "35%", "deals_closed": 9}
+    {"forecast_rev": "$120,000", "broker_split": "$36,000", "agent_split": "$84,000"},
+    {"forecast_rev": "$85,000", "broker_split": "$25,500", "agent_split": "$59,500"}
 ]
 
-# 6. MODULE 6: ESCROW & DEAL ROOM STATUS DATASET
 escrow_db = [
-    {"id": 901, "property": "Downtown Dubai Tower 4", "token_amt": "$150,000", "escrow_status": "FUNDED 🔒", "doc_sign": "Signed ✍️", "closing_date": "2026-08-15"},
-    {"id": 902, "property": "Miami Beach Penthouse", "token_amt": "$45,000", "escrow_status": "PENDING ⏳", "doc_sign": "In Review 📄", "closing_date": "2026-08-30"},
-    {"id": 903, "property": "Worli Sea Face Villa", "token_amt": "$80,000", "escrow_status": "FUNDED 🔒", "doc_sign": "Signed ✍️", "closing_date": "2026-09-05"}
+    {"token_amt": "$5,000", "doc_sign": "Verified", "escrow_status": "FUNDED"},
+    {"token_amt": "$2,500", "doc_sign": "Pending", "escrow_status": "PENDING"}
 ]
 
-# MODULE 5 ENDPOINT
+@app.route('/')
+def home():
+    return jsonify({"status": "Aetheris AI Solutions Backend is Running!"})
+
 @app.route('/revenue', methods=['GET'])
 def get_revenue_analytics():
     return jsonify({"success": True, "analytics": revenue_db})
 
-# MODULE 6 ENDPOINT
 @app.route('/escrow', methods=['GET'])
 def get_escrow_status():
     funded_count = len([item for item in escrow_db if "FUNDED" in item['escrow_status']])
@@ -27,3 +31,6 @@ def get_escrow_status():
         "funded_deals": funded_count,
         "deals": escrow_db
     })
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
