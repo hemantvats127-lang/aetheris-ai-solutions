@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aetheris AI - Module 5</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Aetheris AI Solutions - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#f4f6f9] text-[#333333] p-6">
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="max-w-6xl mx-auto px-4 py-10">
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl font-bold text-gray-900">Aetheris AI Solutions</h1>
+            <p class="text-gray-600 mt-2">AI Sales Assistant B2B outreach solution for luxury HCMC real estate agencies.</p>
+        </header>
 
-    <div class="module-card">
-        <h2>Module 5: Executive Revenue & Deal Analytics</h2>
-        <div class="subtitle">Region-Wise Breakdown & Commission Split</div>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Forecast Revenue</th>
-                        <th>Broker Split</th>
-                        <th>Agent Commission</th>
-                    </tr>
-                </thead>
-                <tbody id="revenue-table-body">
-                    <!-- Data will be injected here via JavaScript -->
-                </tbody>
-            </table>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Module 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-800">Module 1</h3>
+                <p class="text-sm text-gray-500 mt-1">Lead Generation & Scraping</p>
+            </div>
+            <!-- Module 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-800">Module 2</h3>
+                <p class="text-sm text-gray-500 mt-1">AI Email Personalization</p>
+            </div>
+            <!-- Module 3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-800">Module 3</h3>
+                <p class="text-sm text-gray-500 mt-1">Multi-Channel Outreach</p>
+            </div>
+            <!-- Module 4 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <h3 class="text-lg font-semibold text-gray-800">Module 4</h3>
+                <p class="text-sm text-gray-500 mt-1">CRM Sync & Automation</p>
+            </div>
+            <!-- Module 5 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition bg-blue-50/50 border-blue-200">
+                <h3 class="text-lg font-semibold text-blue-900">Module 5</h3>
+                <p class="text-sm text-blue-600 mt-1">Executive Revenue & Deal Analytics</p>
+                <a href="frontend/index.html" class="inline-block mt-4 text-sm font-medium text-blue-600 hover:text-blue-800 underline">Open Analytics Dashboard &rarr;</a>
+            </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
