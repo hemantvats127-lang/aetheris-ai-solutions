@@ -3,45 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aetheris AI | Luxury Real Estate Concierge</title>
+    <title>Aetheris AI Solutions — Luxury REOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="background-overlay"></div>
-    
-    <header class="navbar">
-        <div class="logo">AETHERIS <span>REAL ESTATE</span></div>
-        <div class="status-badge"><span class="pulse"></span> AI Concierge Active</div>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center font-bold text-slate-950 text-lg">
+                A
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
+                    Aetheris AI Solutions — Owner Suite
+                </h1>
+                <p class="text-xs text-slate-400">Executive Real Estate OS • USA | UAE | Vietnam</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Aetheris Engine Active
+            </span>
+        </div>
     </header>
 
-    <main class="hero-container">
-        <div class="hero-content">
-            <span class="tagline">EXCLUSIVITY REDEFINED</span>
-            <h1>Find Your Dream Luxury Estate in HCMC</h1>
-            <p>Experience personalized AI consultation for Saigon’s most elite properties, penthouses, and private villas.</p>
-        </div>
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
 
-        <div class="chat-wrapper">
-            <div class="chat-header">
-                <div class="avatar">🏛️</div>
-                <div class="agent-info">
-                    <h3>Aetheris Private Advisory</h3>
-                    <p>Instant High-Net-Worth Concierge</p>
-                </div>
-            </div>
-            
-            <div class="chat-box" id="chatBox">
-                <div class="message ai-message">
-                    Welcome to Aetheris. Are you looking to acquire a luxury villa or apartment in HCMC? Tell me your preferred budget and ideal location.
-                </div>
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="p-5 bg-slate-900/90 border border-slate-800 rounded-xl shadow-xl">
+                <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Pipeline Value</span>
+                <h2 id="pipelineVal" class="text-3xl font-black text-emerald-400 mt-2">$22,300,000</h2>
+                <p class="text-xs text-slate-500 mt-1">+18% vs last month</p>
             </div>
 
-            <div class="chat-input-area">
-                <input type="text" id="userInput" placeholder="Type your requirements..." onkeypress="handleKeyPress(event)">
-                <button id="sendBtn" onclick="sendMessage()">Send</button>
+            <div class="p-5 bg-slate-900/90 border border-slate-800 rounded-xl shadow-xl">
+                <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">AI Qualified Leads</span>
+                <h2 id="leadsCount" class="text-3xl font-black text-amber-400 mt-2">3 Active</h2>
+                <p class="text-xs text-amber-400/70 mt-1">Anti-Spam Filtered</p>
+            </div>
+
+            <div class="p-5 bg-slate-900/90 border border-slate-800 rounded-xl shadow-xl">
+                <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Field Safety Status</span>
+                <h2 class="text-3xl font-black text-blue-400 mt-2">4 Active Showings</h2>
+                <p class="text-xs text-blue-400/70 mt-1">GPS & SOS Active</p>
+            </div>
+
+            <div class="p-5 bg-slate-900/90 border border-slate-800 rounded-xl shadow-xl">
+                <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Legal Audit Engine</span>
+                <h2 class="text-3xl font-black text-purple-400 mt-2">14 Verified</h2>
+                <p class="text-xs text-purple-400/70 mt-1">RERA & US Disclosures</p>
             </div>
         </div>
+
+        <!-- Live Buyer Pipeline Table -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                    🔥 Live Qualified Buyer Pipeline
+                </h3>
+                <button onclick="fetchLeadsData()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 px-3 py-1.5 rounded border border-amber-500/20 transition-all">
+                    🔄 Sync Live Data
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-300">
+                    <thead class="bg-slate-950 text-amber-400 text-xs uppercase tracking-wider border-b border-slate-800">
+                        <tr>
+                            <th class="p-3.5">Buyer / Contact</th>
+                            <th class="p-3.5">Target Budget</th>
+                            <th class="p-3.5">Timeline</th>
+                            <th class="p-3.5">Region</th>
+                            <th class="p-3.5">AI Score</th>
+                            <th class="p-3.5">Assigned Desk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTable" class="divide-y divide-slate-800/60">
+                        <!-- Dynamic JavaScript insertion -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </main>
 
     <script src="script.js"></script>
