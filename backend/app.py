@@ -2,9 +2,9 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Cross-Origin support for GitHub Pages frontend
+CORS(app)
 
-# Sample initial leads dataset
+# 1. LEADS DATASET
 leads_db = [
     {
         "id": 1,
@@ -38,8 +38,14 @@ leads_db = [
     }
 ]
 
+# 2. SAFETY & SOS DATASET
+agents_safety_db = [
+    {"id": 101, "agent": "Sarah Jenkins", "location": "Miami Beach Penthouse #402", "status": "Active Showing", "battery": "88%", "sos_alert": False},
+    {"id": 102, "agent": "Tran Le", "location": "Saigon Center Tower B", "status": "En Route", "battery": "94%", "sos_alert": False},
+    {"id": 103, "agent": "Vikram Malhotra", "location": "Worli Sea Face Villa", "status": "Active Showing", "battery": "42%", "sos_alert": False}
+]
+
 def calculate_ai_score(budget_num, timeline):
-    """Simple AI heuristic scoring engine logic"""
     if budget_num >= 5000000 or "Immediate" in timeline or "30" in timeline:
         return "HOT LEAD 🔥", "VIP Desk Auto-Assigned"
     elif budget_num >= 1000000:
@@ -51,6 +57,7 @@ def calculate_ai_score(budget_num, timeline):
 def home():
     return jsonify({"status": "Aetheris AI Backend is Active & Ready!"})
 
+# LEADS ENDPOINTS
 @app.route('/api/leads', methods=['GET'])
 def get_leads():
     total_val = sum([int(str(l['budget']).replace('$', '').replace(',', '')) for l in leads_db])
@@ -86,9 +93,31 @@ def create_lead():
         "score": score,
         "desk": desk
     }
-    leads_db.insert(0, new_lead) # Top par add karo
-
+    leads_db.insert(0, new_lead)
     return jsonify({"success": True, "lead": new_lead}), 201
+
+# SAFETY & SOS ENDPOINTS
+@app.route('/api/safety', methods=['GET'])
+def get_safety_status():
+    active_alerts = len([a for a in agents_safety_db if a['sos_alert']])
+    return jsonify({
+        "success": True,
+        "active_alerts": active_alerts,
+        "agents": agents_safety_db
+    })
+
+@app.route('/api/safety/sos', methods=['POST'])
+def trigger_sos():
+    data = request.json or {}
+    agent_id = data.get('agent_id', 101)
+    
+    for agent in agents_safety_db:
+        if agent['id'] == agent_id:
+            agent['sos_alert'] = True
+            agent['status'] = "🚨 EMERGENCY SOS TRIGGERED"
+            return jsonify({"success": True, "message": f"EMERGENCY DISPATCH TRIGGERED FOR {agent['agent']}", "agent": agent}), 200
+            
+    return jsonify({"success": False, "message": "Agent not found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
