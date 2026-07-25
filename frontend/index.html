@@ -1,118 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aetheris AI Solutions - Dashboard</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aetheris AI Solutions - Owner Control Center</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+<body>
 
-  <!-- Sidebar / Navigation Header -->
-  <header class="border-b border-slate-800 bg-slate-950 p-4 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <div class="bg-indigo-600 p-2 rounded-lg">
-          <i class="fa-solid fa-brain text-xl text-white"></i>
-        </div>
-        <h1 class="text-xl font-bold tracking-wide">Aetheris AI Solutions</h1>
-      </div>
-      <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-medium">
-        ● API Connected
-      </span>
+  <!-- Header -->
+  <header class="header-bar">
+    <div>
+      <h1 class="brand-title">Aetheris AI Solutions</h1>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Owner Suite & Executive Control Engine</p>
     </div>
+    <span class="badge-status" id="systemHealthBadge">System Health: 100% Operational</span>
   </header>
 
-  <!-- Main Container -->
-  <main class="max-w-7xl mx-auto p-6 space-y-8">
+  <!-- Main 6 Module Layout -->
+  <main class="grid-layout">
     
-    <!-- Header Title -->
+    <!-- Left Column: Modules 1, 2, 3, 4, 5, 6 Controls -->
     <div>
-      <h2 class="text-2xl font-bold text-white">Module 1: Lead Generation & Scraping</h2>
-      <p class="text-slate-400 text-sm mt-1">Automated scraping and enrichment for luxury HCMC real estate prospects.</p>
+      <!-- Module 1 & 2: Lead Pipeline, WhatsApp Verification & CRM Push -->
+      <section class="card">
+        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.5rem;">
+          Modules 1 & 2: Auto-Outreach, WhatsApp Verification & AI Lead Scoring
+        </h2>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Track Intent Scores, Trigger WhatsApp Bot & Push to CRM / Calendar
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Lead Name</th>
+              <th>Budget</th>
+              <th>AI Score</th>
+              <th>WhatsApp Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>David Miller</strong><br><span style="color:var(--text-muted);">+1 (555) 019-2834</span></td>
+              <td style="color:var(--emerald-accent); font-weight:bold;">$4.5M</td>
+              <td><span style="color:var(--gold-primary); font-weight:bold;">92%</span></td>
+              <td><span style="color:var(--emerald-accent);">Verified ✓</span></td>
+              <td>
+                <button class="btn-gold" onclick="pushToCRM('L-101')">Push to CRM/Calendar</button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Elena Rostova</strong><br><span style="color:var(--text-muted);">+1 (555) 014-9921</span></td>
+              <td style="color:var(--emerald-accent); font-weight:bold;">$12.0M</td>
+              <td><span style="color:var(--gold-primary); font-weight:bold;">68%</span></td>
+              <td id="status-L-102"><span style="color:#ef4444;">Pending</span></td>
+              <td>
+                <button class="btn-outline" onclick="triggerWhatsAppBot('L-102')">Verify via Bot</button>
+                <button class="btn-gold" onclick="pushToCRM('L-102')">Push CRM</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Module 3, 4, 5, 6 Overview & Dynamic Controls -->
+      <section class="card">
+        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.8rem;">
+          Modules 3-6: Portal Control, Legal Audit, SOS Safety & Revenue Hub
+        </h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.8rem;">
+          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted);">M3: Website AI Smart Portal</p>
+            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">Conversational AI Active</p>
+            <button class="btn-outline" onclick="triggerModuleAction(3)">Check Portal Status</button>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted);">M4: Legal & Compliance Audit</p>
+            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">RERA/US Legal Clear</p>
+            <button class="btn-outline" onclick="triggerModuleAction(4)">Run Legal Audit</button>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted);">M5: Agent SOS Safety Protocol</p>
+            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">GPS Signal Active</p>
+            <button class="btn-danger" onclick="triggerModuleAction(5)">Ping SOS Test</button>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-muted);">M6: Revenue & Escrow Hub</p>
+            <p style="font-weight: bold; color: var(--gold-primary); margin-bottom: 0.5rem;">$22.3M Pipeline Value</p>
+            <button class="btn-outline" onclick="triggerModuleAction(6)">Audit Escrow Vault</button>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- MODULE 1 CONTENT -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-      <!-- Control Panel / Scraper Form -->
-      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 space-y-4">
-        <h3 class="text-lg font-semibold flex items-center gap-2">
-          <i class="fa-solid fa-filter text-indigo-400"></i> Lead Search & Scraper
-        </h3>
+    <!-- Right Column: Live Conversational AI Terminal -->
+    <div>
+      <section class="card">
+        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.5rem;">
+          AI System Log & Conversational Engine
+        </h2>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Real-time executive command interface
+        </p>
 
-        <form id="scraper-form" class="space-y-4">
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1">Target Niche / Keywords</label>
-            <input type="text" id="target-niche" value="Luxury Real Estate Agencies" 
-                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1">Location</label>
-            <input type="text" id="target-location" value="Ho Chi Minh City, Vietnam" 
-                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500" />
-          </div>
-
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1">Max Leads to Scrape</label>
-            <select id="max-leads" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-              <option value="10">10 Leads</option>
-              <option value="25" selected>25 Leads</option>
-              <option value="50">50 Leads</option>
-            </select>
-          </div>
-
-          <button type="submit" id="scrape-btn" 
-                  class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg">
-            <i class="fa-solid fa-magnifying-glass"></i> Start Scraping
-          </button>
-        </form>
-      </div>
-
-      <!-- Scraped Results & Data Table -->
-      <div class="lg:col-span-2 bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 space-y-4">
-        <div class="flex justify-between items-center">
-          <h3 class="text-lg font-semibold flex items-center gap-2">
-            <i class="fa-solid fa-list-check text-indigo-400"></i> Discovered Leads
-          </h3>
-          <span id="lead-count" class="text-xs bg-slate-700 text-slate-300 px-2.5 py-1 rounded-full">
-            0 Leads
-          </span>
+        <div id="ownerTerminal" class="terminal-box">
+          <div class="log-item ai">[AETHERIS OS]: System initialized. All 6 Modules online.</div>
+          <div class="log-item">[AI CONVERSATIONAL]: Ready for Owner voice/text commands...</div>
         </div>
 
-        <!-- Leads Table -->
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-sm">
-            <thead>
-              <tr class="border-b border-slate-700 text-slate-400 text-xs uppercase tracking-wider">
-                <th class="py-3 px-3">Company / Agency</th>
-                <th class="py-3 px-3">Contact Email</th>
-                <th class="py-3 px-3">Phone</th>
-                <th class="py-3 px-3">Status</th>
-              </tr>
-            </thead>
-            <tbody id="leads-table-body" class="divide-y divide-slate-700/50 text-slate-300">
-              <!-- Default State -->
-              <tr id="empty-state">
-                <td colspan="4" class="py-8 text-center text-slate-500">
-                  No leads scraped yet. Click "Start Scraping" to generate leads.
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+          <input type="text" id="ownerInput" placeholder="Command AI Engine..." style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 0.5rem; border-radius: 0.4rem; font-size: 0.8rem;" onkeypress="handleKeyPress(event)">
+          <button class="btn-gold" onclick="sendOwnerCommand()">Run</button>
         </div>
-      </div>
-
-    </section>
+      </section>
+    </div>
 
   </main>
 
   <script src="script.js"></script>
 </body>
-</html>
