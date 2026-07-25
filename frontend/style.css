@@ -1,56 +1,47 @@
-/* Custom CSS for Aetheris AI Solutions Owner Suite */
-
-@layer utilities {
-  /* Smooth Custom Scrollbar for Luxury Aesthetics */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #020617; /* slate-950 */
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1e293b; /* slate-800 */
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #f59e0b; /* amber-500 */
-  }
+* {
+  box-sizing: border-box;
 }
-
-/* Background Subtle Gradient Overlay */
 body {
-  background-color: #020617;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
-  background-attachment: fixed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
 }
-
-/* Glassmorphism Card Hover Effects */
-.border-slate-800 {
-  transition: border-color 0.3s ease, transform 0.2s ease;
+.module-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 0 auto;
 }
-
-.border-slate-800:hover {
-  border-color: rgba(245, 158, 11, 0.3);
+.module-card h2 {
+  margin-top: 0;
+  color: #1a1f36;
 }
-
-/* Table Row Smooth Selection */
-tbody tr {
-  transition: background-color 0.2s ease-in-out;
+.subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
 }
-
-/* Pulse Glow Animation for Aetheris Active Status */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(52, 211, 153, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.8);
-  }
+.table-container {
+  overflow-x: auto;
 }
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+th {
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+}
+tr:hover {
+  background-color: #f3f4f6;
 }
