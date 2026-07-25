@@ -1,47 +1,35 @@
-<!-- MODULE 5: EXECUTIVE REVENUE & DEAL ANALYTICS -->
-<div class="rounded-xl bg-slate-900/60 border border-slate-800 overflow-hidden mb-6">
-  <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
-    <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2">
-      <span>📊</span> Module 5: Revenue & Commission Analytics
-    </h3>
-    <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">Region-Wise Breakdown</span>
-  </div>
-  <div class="p-4 overflow-x-auto">
-    <table class="w-full text-left text-sm text-slate-300">
-      <thead class="bg-slate-950 text-emerald-400 text-xs uppercase tracking-wider border-b border-slate-800">
-        <tr>
-          <th class="p-3">Region</th>
-          <th class="p-3">Forecast Revenue</th>
-          <th class="p-3">Brokerage Split</th>
-          <th class="p-3">Agent Commission</th>
-          <th class="p-3">Deals Closed</th>
-        </tr>
-      </thead>
-      <tbody id="revenueTable" class="divide-y divide-slate-800/60"></tbody>
-    </table>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetheris AI - Module 5</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#f4f6f9] text-[#333333] p-6">
 
-<!-- MODULE 6: ESCROW & DEAL ROOM STATUS -->
-<div class="rounded-xl bg-slate-900/60 border border-slate-800 overflow-hidden mb-6">
-  <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
-    <h3 class="font-semibold text-slate-200 text-sm flex items-center gap-2">
-      <span>🤝</span> Module 6: Escrow & Smart Contract Deal Room
-    </h3>
-    <span class="text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">Token & Closing Tracker</span>
-  </div>
-  <div class="p-4 overflow-x-auto">
-    <table class="w-full text-left text-sm text-slate-300">
-      <thead class="bg-slate-950 text-amber-400 text-xs uppercase tracking-wider border-b border-slate-800">
-        <tr>
-          <th class="p-3">Property</th>
-          <th class="p-3">Earnest / Token Amount</th>
-          <th class="p-3">Escrow Status</th>
-          <th class="p-3">Document Status</th>
-          <th class="p-3">Target Closing Date</th>
-        </tr>
-      </thead>
-      <tbody id="escrowTable" class="divide-y divide-slate-800/60"></tbody>
-    </table>
-  </div>
-</div>
+    <div class="module-card">
+        <h2>Module 5: Executive Revenue & Deal Analytics</h2>
+        <div class="subtitle">Region-Wise Breakdown & Commission Split</div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Forecast Revenue</th>
+                        <th>Broker Split</th>
+                        <th>Agent Commission</th>
+                    </tr>
+                </thead>
+                <tbody id="revenue-table-body">
+                    <!-- Data will be injected here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
