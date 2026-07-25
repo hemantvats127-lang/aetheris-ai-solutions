@@ -1,23 +1,39 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
+import random
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Allows frontend to make requests from GitHub Pages
 
-# Module 5 Revenue Data
-revenue_db = [
-    {"forecast_rev": "$120,000", "broker_split": "$36,000", "agent_split": "$84,000"},
-    {"forecast_rev": "$85,000", "broker_split": "$25,500", "agent_split": "$59,500"},
-    {"forecast_rev": "$210,000", "broker_split": "$63,000", "agent_split": "$147,000"}
+# Sample database for Module 1 (Lead Gen)
+MOCK_LEADS = [
+    {"id": 1, "company": "VinHomes Luxury Realty", "email": "contact@vinhomes-luxury.vn", "phone": "+84 90 123 4567", "status": "Verified", "niche": "Real Estate"},
+    {"id": 2, "company": "Saigon Premier Properties", "email": "info@saigonpremier.com", "phone": "+84 91 876 5432", "status": "Verified", "niche": "Real Estate"},
+    {"id": 3, "company": "HCMC Elite Estates", "email": "sales@hcmcelite.vn", "phone": "+84 93 333 2211", "status": "Pending", "niche": "Real Estate"},
+    {"id": 4, "company": "Metropole Thu Thiem Agent", "email": "leads@metropole-thuthiem.vn", "phone": "+84 98 444 5566", "status": "Verified", "niche": "Real Estate"}
 ]
 
-@app.route('/')
-def home():
-    return jsonify({"status": "Aetheris AI Solutions Backend is Running!"})
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({"status": "active", "system": "Aetheris AI Solutions Backend", "version": "1.0"})
 
-@app.route('/revenue', methods=['GET'])
-def get_revenue_analytics():
-    return jsonify({"success": True, "analytics": revenue_db})
+# MODULE 1 API: Scraping / Fetching Leads
+@app.route('/api/module1/scrape', methods=['POST'])
+def scrape_leads():
+    data = request.get_json() or {}
+    niche = data.get("niche", "Luxury Real Estate")
+    location = data.get("location", "Ho Chi Minh City")
+    limit = int(data.get("limit", 10))
+
+    # Return filtered/scraped mock results
+    results = MOCK_LEADS[:limit]
+    return jsonify({
+        "success": True,
+        "niche": niche,
+        "location": location,
+        "total_scraped": len(results),
+        "leads": results
+    })
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
