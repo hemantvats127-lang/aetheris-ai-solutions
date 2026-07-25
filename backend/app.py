@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+# Enable CORS for all domains and routes
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # 1. LEADS DATASET
 leads_db = [
@@ -43,6 +44,13 @@ agents_safety_db = [
     {"id": 101, "agent": "Sarah Jenkins", "location": "Miami Beach Penthouse #402", "status": "Active Showing", "battery": "88%", "sos_alert": False},
     {"id": 102, "agent": "Tran Le", "location": "Saigon Center Tower B", "status": "En Route", "battery": "94%", "sos_alert": False},
     {"id": 103, "agent": "Vikram Malhotra", "location": "Worli Sea Face Villa", "status": "Active Showing", "battery": "42%", "sos_alert": False}
+]
+
+# 3. RERA & LEGAL AUDIT DATASET
+legal_audit_db = [
+    {"id": 501, "property": "Worli Sea Face Villa", "rera_id": "PRM/KA/RERA/1251/2024", "jurisdiction": "India (MahaRERA)", "status": "CLEAR ✅", "risk_score": "LOW (2%)"},
+    {"id": 502, "property": "Miami Beach Penthouse", "rera_id": "US-FL-DISC-9921", "jurisdiction": "USA (Florida Title)", "status": "CLEAR ✅", "risk_score": "LOW (1%)"},
+    {"id": 503, "property": "Downtown Dubai Tower 4", "rera_id": "DLD-RERA-88391", "jurisdiction": "UAE (RERA Dubai)", "status": "PENDING REVIEW ⚠️", "risk_score": "MED (18%)"}
 ]
 
 def calculate_ai_score(budget_num, timeline):
@@ -119,8 +127,39 @@ def trigger_sos():
             
     return jsonify({"success": False, "message": "Agent not found"}), 404
 
+# RERA & LEGAL AUDIT ENDPOINTS
+@app.route('/api/legal', methods=['GET'])
+def get_legal_status():
+    verified_count = len([item for item in legal_audit_db if "CLEAR" in item['status']])
+    return jsonify({
+        "success": True,
+        "verified_count": verified_count,
+        "audits": legal_audit_db
+    })
+
+@app.route('/api/legal/verify', methods=['POST'])
+def run_legal_audit():
+    data = request.json or {}
+    prop_name = data.get('property', 'New Luxury Listing')
+    jur = data.get('jurisdiction', 'Global RERA')
+    
+    new_audit = {
+        "id": 500 + len(legal_audit_db) + 1,
+        "property": prop_name,
+        "rera_id": f"RERA-AUTO-{len(legal_audit_db)+100}",
+        "jurisdiction": jur,
+        "status": "CLEAR ✅",
+        "risk_score": "LOW (0%)"
+    }
+    legal_audit_db.insert(0, new_audit)
+    return jsonify({"success": True, "audit": new_audit}), 201
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
 
+
+
+   
+  
 
 
