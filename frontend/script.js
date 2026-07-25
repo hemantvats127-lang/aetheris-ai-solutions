@@ -1,51 +1,47 @@
-async function fetchRevenueData() {
-  try {
-    const response = await fetch(`${BASE_URL}/revenue`);
-    const data = await response.json();
-
-    if (data.success && data.analytics) {
-      const revenueTable = document.getElementById('revenueTable');
-      if (revenueTable) {
-        revenueTable.innerHTML = data.analytics.map(item => `
-          <tr class="hover:bg-slate-900/80">
-            <td class="p-3 font-semibold text-slate-100">${item.region}</td>
-            <td class="p-3 font-bold text-emerald-400">${item.forecast_rev}</td>
-            <td class="p-3 text-xs text-slate-300">${item.broker_split}</td>
-            <td class="p-3 text-xs text-amber-400">${item.agent_split}</td>
-            <td class="p-3 text-xs font-bold text-sky-400">${item.deals_closed} Deals</td>
-          </tr>
-        `).join('');
-      }
-    }
-  } catch (err) {
-    console.error("Revenue Engine fetch error:", err);
-  }
+* {
+  box-sizing: border-box;
 }
-
-async function fetchEscrowData() {
-  try {
-    const response = await fetch(`${BASE_URL}/escrow`);
-    const data = await response.json();
-
-    if (data.success && data.deals) {
-      const escrowTable = document.getElementById('escrowTable');
-      if (escrowTable) {
-        escrowTable.innerHTML = data.deals.map(deal => `
-          <tr class="hover:bg-slate-900/80">
-            <td class="p-3 font-semibold text-slate-200">${deal.property}</td>
-            <td class="p-3 font-mono text-xs text-emerald-300">${deal.token_amt}</td>
-            <td class="p-3 font-bold text-xs">${deal.escrow_status}</td>
-            <td class="p-3 text-xs text-slate-300">${deal.doc_sign}</td>
-            <td class="p-3 text-xs font-mono text-purple-400">${deal.closing_date}</td>
-          </tr>
-        `).join('');
-      }
-    }
-  } catch (err) {
-    console.error("Escrow Engine fetch error:", err);
-  }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
 }
-
-// Initial Data Fetch Execution
-fetchRevenueData();
-fetchEscrowData();
+.module-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 0 auto;
+}
+.module-card h2 {
+  margin-top: 0;
+  color: #1a1f36;
+}
+.subtitle {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+th {
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+}
+tr:hover {
+  background-color: #f3f4f6;
+}
