@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-# Enable CORS for all domains and routes
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # 1. LEADS DATASET
@@ -51,6 +50,13 @@ legal_audit_db = [
     {"id": 501, "property": "Worli Sea Face Villa", "rera_id": "PRM/KA/RERA/1251/2024", "jurisdiction": "India (MahaRERA)", "status": "CLEAR ✅", "risk_score": "LOW (2%)"},
     {"id": 502, "property": "Miami Beach Penthouse", "rera_id": "US-FL-DISC-9921", "jurisdiction": "USA (Florida Title)", "status": "CLEAR ✅", "risk_score": "LOW (1%)"},
     {"id": 503, "property": "Downtown Dubai Tower 4", "rera_id": "DLD-RERA-88391", "jurisdiction": "UAE (RERA Dubai)", "status": "PENDING REVIEW ⚠️", "risk_score": "MED (18%)"}
+]
+
+# 4. WHATSAPP & VOICE AI OUTREACH DATASET
+outreach_db = [
+    {"id": 701, "client": "Sheikh Mansoor", "channel": "WhatsApp AI Bot 💬", "last_msg": "Brochure sent for Downtown Dubai Tower 4. Awaiting view confirmation.", "intent": "High Interest 🚀", "status": "Delivered ✅"},
+    {"id": 702, "client": "Alexander Vance", "channel": "Voice AI Agent 📞", "last_msg": "Call duration 2m 14s: Requested virtual tour for Miami Penthouse on Friday.", "intent": "Qualified 🎯", "status": "Completed 🟢"},
+    {"id": 703, "client": "Nguyen Minh", "channel": "WhatsApp AI Bot 💬", "last_msg": "Inquired about flexible payment plans for Saigon Center units.", "intent": "Warm 🟡", "status": "Replied 📲"}
 ]
 
 def calculate_ai_score(budget_num, timeline):
@@ -154,12 +160,32 @@ def run_legal_audit():
     legal_audit_db.insert(0, new_audit)
     return jsonify({"success": True, "audit": new_audit}), 201
 
+# WHATSAPP & VOICE AI OUTREACH ENDPOINTS
+@app.route('/api/outreach', methods=['GET'])
+def get_outreach_logs():
+    active_conversations = len(outreach_db)
+    return jsonify({
+        "success": True,
+        "active_conversations": active_conversations,
+        "logs": outreach_db
+    })
+
+@app.route('/api/outreach/trigger', methods=['POST'])
+def trigger_outreach():
+    data = request.json or {}
+    client_name = data.get('client', 'VIP Buyer')
+    channel_type = data.get('channel', 'WhatsApp AI Bot 💬')
+    
+    new_log = {
+        "id": 700 + len(outreach_db) + 1,
+        "client": client_name,
+        "channel": channel_type,
+        "last_msg": "Automated voice/chat follow-up initiated by Aetheris OS.",
+        "intent": "High Interest 🚀",
+        "status": "Active Now 🟢"
+    }
+    outreach_db.insert(0, new_log)
+    return jsonify({"success": True, "log": new_log}), 201
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-
-
-
-   
-  
-
-
