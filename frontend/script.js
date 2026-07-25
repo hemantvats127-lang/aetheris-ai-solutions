@@ -1,11 +1,11 @@
-const API_URL = 'https://aetheris-ai-solutions.onrender.com/api/leads';
+const BASE_URL = 'https://aetheris-ai-solutions.onrender.com/api';
 
 async function fetchLeadsData() {
   const tableBody = document.getElementById('leadTable');
   tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">Connecting to Aetheris AI Engine...</td></tr>`;
 
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(`${BASE_URL}/leads`);
     const data = await response.json();
 
     if (data.success && data.leads) {
@@ -24,21 +24,66 @@ async function fetchLeadsData() {
       `).join('');
     }
   } catch (err) {
-    tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-400">Failed to sync live data. Retrying...</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-400">Failed to sync live data.</td></tr>`;
   }
 }
 
-function openModal() {
-  document.getElementById('leadModal').classList.remove('hidden');
+async function fetchSafetyData() {
+  try {
+    const response = await fetch(`${BASE_URL}/safety`);
+    const data = await response.json();
+
+    if (data.success && data.agents) {
+      const sosStat = document.getElementById('stat-sos-status');
+      if (data.active_alerts > 0) {
+        sosStat.innerText = `${data.active_alerts} EMERGENCY ALERT!`;
+        sosStat.className = "text-3xl font-extrabold text-red-500 animate-bounce mt-2";
+      } else {
+        sosStat.innerText = "All Safe ✅";
+        sosStat.className = "text-3xl font-extrabold text-sky-400 mt-2";
+      }
+
+      const grid = document.getElementById('safetyGrid');
+      grid.innerHTML = data.agents.map(agent => `
+        <div class="p-4 rounded-lg bg-slate-950 border ${agent.sos_alert ? 'border-red-500 bg-red-950/20' : 'border-slate-800'}">
+          <div class="flex justify-between items-start">
+            <h4 class="font-bold text-slate-200">${agent.agent}</h4>
+            <span class="text-[10px] px-2 py-0.5 rounded ${agent.sos_alert ? 'bg-red-500 text-white font-bold' : 'bg-slate-800 text-slate-400'}">${agent.battery} Battery</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">📍 ${agent.location}</p>
+          <div class="mt-3 flex justify-between items-center text-xs">
+            <span class="font-medium ${agent.sos_alert ? 'text-red-400 animate-pulse font-bold' : 'text-emerald-400'}">${agent.status}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    console.error("Safety Engine fetch error:", err);
+  }
 }
 
-function closeModal() {
-  document.getElementById('leadModal').classList.add('hidden');
+async function triggerEmergencySOS() {
+  try {
+    const res = await fetch(`${BASE_URL}/safety/sos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ agent_id: 101 })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("🚨 EMERGENCY SOS SIGNAL SENT TO FIELD TEAM & POLICE DISPATCH!");
+      fetchSafetyData();
+    }
+  } catch (err) {
+    alert("SOS Dispatch failed.");
+  }
 }
+
+function openModal() { document.getElementById('leadModal').classList.remove('hidden'); }
+function closeModal() { document.getElementById('leadModal').classList.add('hidden'); }
 
 async function submitLead(e) {
   e.preventDefault();
-  
   const leadPayload = {
     name: document.getElementById('inputName').value,
     contact: document.getElementById('inputContact').value,
@@ -48,23 +93,25 @@ async function submitLead(e) {
   };
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(`${BASE_URL}/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(leadPayload)
     });
-    
     if (res.ok) {
       closeModal();
       document.getElementById('leadForm').reset();
-      fetchLeadsData(); // Instant Refresh Table
+      fetchLeadsData();
     }
   } catch (err) {
-    alert("Error submitting lead to AI Engine.");
+    alert("Error submitting lead.");
   }
 }
 
-// Initial fetch on page load
+// Initial Data Load
 fetchLeadsData();
+fetchSafetyData();
+
+
 
 
