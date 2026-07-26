@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Client Portal | Aetheris AI Solutions</title>
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --card-bg: #121520;
+            --accent-gold: #d4af37;
+            --text-main: #f0f2f5;
+            --text-muted: #8a93a0;
+            --border-color: #222738;
+            --success-green: #10b981;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+        }
+
+        .badge {
+            background-color: rgba(212, 175, 55, 0.15);
+            color: var(--accent-gold);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--accent-gold);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(18, 21, 32, 0.9), rgba(10, 11, 16, 0.9));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 25px auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-gold);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+        }
+
+        .btn {
+            background-color: var(--accent-gold);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-main);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status-msg {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--success-green);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">AETHERIS <span style="font-weight: 300; color: #fff;">PORTAL</span></div>
+            <div class="badge">VIP CLIENT ACCESS</div>
+        </header>
+
+        <section class="hero">
+            <h1>Exclusive Luxury Properties</h1>
+            <p>Welcome to your private portal. Schedule private viewings, request 3D virtual walkthroughs, or speak directly with senior portfolio managers.</p>
+        </section>
+
+        <div class="grid">
+            <div class="card">
+                <h3>📅 Schedule Private Showing</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Book a priority in-person or virtual tour with dedicated real estate consultants.</p>
+                <input type="text" id="clientName" placeholder="Your Full Name">
+                <input type="tel" id="clientPhone" placeholder="Phone / WhatsApp Number">
+                <button class="btn" onclick="bookShowing()">Confirm VIP Tour Request</button>
+                <div id="bookingStatus" class="status-msg">✓ Request Sent! Our team will contact you shortly.</div>
+            </div>
+
+            <div class="card">
+                <h3>💬 Instant WhatsApp Verification</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Verify your identity to unlock hidden off-market listings and confidential pricing.</p>
+                <button class="btn btn-secondary" onclick="verifyWhatsapp()">Request WhatsApp Code</button>
+                <div id="whatsappStatus" class="status-msg">✓ Verification code dispatched to your mobile.</div>
+            </div>
+
+            <div class="card">
+                <h3>🌐 Request 3D Walkthrough</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Get immediate access to high-definition 3D spatial models of luxury penthouses.</p>
+                <button class="btn btn-secondary" onclick="trigger3DTour()">Launch 3D Spatial Model</button>
+                <div id="tourStatus" class="status-msg">✓ 3D Virtual Environment loaded successfully.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script>
+        function emitOwnerEvent(message, type = 'success') {
+            const eventData = {
+                message: message,
+                type: type,
+                id: Date.now(), // Force trigger event even on identical messages
+                timestamp: new Date().toLocaleTimeString()
+            };
+            localStorage.setItem('aetheris_owner_event', JSON.stringify(eventData));
+        }
+
+        function bookShowing() {
+            const nameInput = document.getElementById('clientName');
+            const phoneInput = document.getElementById('clientPhone');
+            
+            const name = nameInput.value.trim() || 'Anonymous VIP';
+            const phone = phoneInput.value.trim() || 'Not Provided';
+
+            emitOwnerEvent(`NEW VIP SHOWING BOOKED: Client "${name}" (${phone}) requested a private property tour.`, 'success');
+            
+            // UI Reset & Confirmation
+            nameInput.value = '';
+            phoneInput.value = '';
+            showStatus('bookingStatus');
+        }
+
+        function verifyWhatsapp() {
+            emitOwnerEvent('WHATSAPP VERIFICATION: A client requested off-market access code via WhatsApp.', 'info');
+            showStatus('whatsappStatus');
+        }
+
+        function trigger3DTour() {
+            emitOwnerEvent('3D TOUR STARTED: VIP Client opened 3D Spatial Walkthrough model.', 'warning');
+            showStatus('tourStatus');
+        }
+
+        function showStatus(elementId) {
+            const status = document.getElementById(elementId);
+            if(status) {
+                status.style.display = 'block';
+                setTimeout(() => { status.style.display = 'none'; }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
