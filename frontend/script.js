@@ -118,3 +118,29 @@ function handleKeyPress(event) {
     sendOwnerCommand();
   }
 }
+function handleKeyPress(event) {
+  if (event.key === 'Enter') {
+    sendOwnerCommand();
+  }
+}
+
+// ==========================================
+// REAL-TIME CROSS-TAB SYNC (CLIENT -> OWNER)
+// ==========================================
+window.addEventListener('storage', function(e) {
+  if (e.key === 'aetheris_owner_event' && e.newValue) {
+    try {
+      const data = JSON.parse(e.newValue);
+      if (data && data.message) {
+        // Log event to owner console/terminal
+        if (typeof logToTerminal === 'function') {
+          logToTerminal(`[CLIENT PORTAL LIVE]: ${data.message}`, data.type || 'success');
+        } else {
+          console.log('[CLIENT PORTAL LIVE]:', data.message);
+        }
+      }
+    } catch (err) {
+      console.error('Error parsing live event:', err);
+    }
+  }
+});
