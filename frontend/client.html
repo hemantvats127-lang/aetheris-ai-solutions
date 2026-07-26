@@ -145,6 +145,7 @@
 
         .chat-msg {
             margin-bottom: 8px;
+            word-break: break-word;
         }
 
         .chat-msg.ai { color: var(--accent-gold); }
@@ -164,7 +165,6 @@
 </head>
 <body>
 
-    <!-- Header with WhatsApp Verified Badge -->
     <div class="header">
         <div>
             <h1 class="brand-title">AETHERIS PORTAL</h1>
@@ -189,7 +189,7 @@
             <div class="chat-box" id="chatBox">
                 <div class="chat-msg ai"><strong>AI Concierge:</strong> Welcome VIP Client. How can I assist your luxury acquisition today?</div>
             </div>
-            <input type="text" id="userInput" placeholder="Ask AI Assistant..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="Ask AI Assistant..." onkeyup="handleKeyPress(event)">
             <button onclick="sendChatMessage()">Send Query</button>
         </div>
 
@@ -249,18 +249,20 @@
     </div>
 
     <script>
-        // Robust Cross-Tab Event Synchronizer with Unique Nonce
+        // Force Cross-Tab Event Sync
         function emitOwnerEvent(type, payload) {
             const eventData = {
                 type: type,
                 payload: payload,
-                nonce: Math.random().toString(36.substring(2)),
-                timestamp: Date.now()
+                event_id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                timestamp: new Date().toLocaleTimeString()
             };
+            // Remove previous item to force storage event trigger across browser tabs
+            localStorage.removeItem('aetheris_owner_event');
             localStorage.setItem('aetheris_owner_event', JSON.stringify(eventData));
+            console.log("Emitted Event:", eventData);
         }
 
-        // Optimized Multi-Language Handler
         const translations = {
             en: "Welcome VIP Client. How can I assist your luxury acquisition today?",
             hi: "नमस्ते VIP ग्राहक! मैं आपकी क्या सहायता कर सकता हूँ?",
@@ -268,35 +270,53 @@
             ar: "أهلاً بك عميلنا المميز. كيف يمكنني مساعدتك اليوم؟"
         };
 
+        const aiResponses = {
+            en: "Query received. Analyzing portfolio ROI and syncing live records to Owner Suite.",
+            hi: "आपका प्रश्न प्राप्त हुआ। पोर्टफोलियो ROI का विश्लेषण किया जा रहा है और डेटा ओनर सूट में सिंक हो रहा है।",
+            es: "Consulta recibida. Analizando el ROI del portafolio y sincronizando con Owner Suite.",
+            ar: "تم استلام استفسارك. جاري تحليل العائد على الاستثمار ومزامنة البيانات."
+        };
+
         function changeLanguage() {
             const lang = document.getElementById('langSelect').value;
             const chatBox = document.getElementById('chatBox');
             const greeting = translations[lang] || translations['en'];
             
-            chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge [Language Switch]:</strong> ${greeting}</div>`;
+            chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge:</strong> ${greeting}</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
             emitOwnerEvent('LANGUAGE_CHANGED', { language: lang });
         }
 
         function handleKeyPress(e) {
-            if(e.key === 'Enter') sendChatMessage();
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
         }
 
         function sendChatMessage() {
             const input = document.getElementById('userInput');
             const chatBox = document.getElementById('chatBox');
+            const lang = document.getElementById('langSelect').value;
             const text = input.value.trim();
-            if(!text) return;
 
+            if (!text) return;
+
+            // Render User Message
             chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
-            emitOwnerEvent('AI_CONCIERGE_QUERY', { query: text });
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-            setTimeout(() => {
-                chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge:</strong> Query logged & spatial portfolio data dispatched to Owner Terminal.</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
+            // Emit Event to Owner Terminal
+            emitOwnerEvent('AI_CONCIERGE_QUERY', { query: text, language: lang });
 
+            // Clear Input
             input.value = '';
+
+            // AI Reply Dynamic
+            setTimeout(() => {
+                const reply = aiResponses[lang] || aiResponses['en'];
+                chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge:</strong> ${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 400);
         }
 
         function scheduleShowing() {
