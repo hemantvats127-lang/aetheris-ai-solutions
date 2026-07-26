@@ -125,6 +125,9 @@
 
 <!-- LIVE CROSS-TAB SYNC SCRIPT -->
 <script>
+// Lead Score Tracking Logic
+let currentLeadScore = 0;
+
 window.addEventListener('storage', function(e) {
     if (e.key === 'aetheris_owner_event' && e.newValue) {
         try {
@@ -138,42 +141,63 @@ window.addEventListener('storage', function(e) {
 
 function logClientEvent(eventObj) {
     let message = "";
+    let scoreBoost = 0;
+
+    // Calculate Dynamic Intent Score
     switch(eventObj.type) {
         case 'AI_CONCIERGE_QUERY':
-            message = `[CLIENT CONCIERGE]: Query Received -> "${eventObj.payload.query}" (${(eventObj.payload.language || 'en').toUpperCase()})`;
+            scoreBoost = 10;
+            message = `[CLIENT CONCIERGE]: Query Received -> "${eventObj.payload.query}"`;
             break;
         case 'VIP_SHOWING_BOOKED':
-            message = `[CRM & CALENDAR SYNC]: VIP Tour Scheduled -> Name: ${eventObj.payload.name} | Phone: ${eventObj.payload.phone} (${eventObj.payload.tourType})`;
+            scoreBoost = 50;
+            message = `[CRM & CALENDAR SYNC]: VIP Tour Scheduled -> ${eventObj.payload.name}`;
             break;
         case '3D_WALKTHROUGH_LAUNCHED':
+            scoreBoost = 25;
             message = `[3D ENGINE]: Spatial Tour Activated for ${eventObj.payload.property}`;
             break;
         case 'LEGAL_VAULT_ACCESSED':
-            message = `[LEGAL VAULT]: Encrypted Package Requested by VIP Client`;
+            scoreBoost = 40;
+            message = `[LEGAL VAULT]: Encrypted Package Requested`;
             break;
         case 'LANGUAGE_CHANGED':
+            scoreBoost = 5;
             message = `[CLIENT PORTAL]: Switched language to ${eventObj.payload.language}`;
             break;
         default:
             message = `[CLIENT EVENT]: ${JSON.stringify(eventObj.payload)}`;
     }
 
-    console.log("LIVE EVENT CAPTURED:", message);
+    // Update Global Score
+    currentLeadScore += scoreBoost;
     
-    // Exact Owner Terminal Box Target
+    console.log("LIVE EVENT CAPTURED:", message, "New Score:", currentLeadScore);
+    
+    // 1. Append to Terminal Log Box
     const logBox = document.getElementById('ownerTerminal');
-
     const logElement = document.createElement('div');
     logElement.className = 'log-item';
-    logElement.style.color = '#10b981'; // Green color for live synced events
-    logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message}`;
+    logElement.style.color = currentLeadScore >= 70 ? '#f59e0b' : '#10b981'; // Gold/Orange on High Score
+    
+    let priorityTag = currentLeadScore >= 70 ? ' 🔥 [HIGH PRIORITY LEAD]' : '';
+    logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS)${priorityTag}`;
     
     if (logBox) {
         logBox.appendChild(logElement);
         logBox.scrollTop = logBox.scrollHeight;
     }
+
+    // 2. Update AI Score UI Badge on Dashboard
+    const scoreBadge = document.querySelector('.score-badge') || document.querySelector('td:nth-child(3)');
+    if (scoreBadge) {
+        scoreBadge.innerText = `${currentLeadScore}%`;
+        if (currentLeadScore >= 70) {
+            scoreBadge.style.color = '#ef4444';
+            scoreBadge.style.fontWeight = 'bold';
+        }
+    }
 }
 </script>
 
-</body>
 </html>
