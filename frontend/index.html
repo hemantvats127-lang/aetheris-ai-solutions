@@ -122,28 +122,26 @@
 
   </main>
 <script src="script.js"></script>
-
-<!-- LIVE CROSS-TAB SYNC SCRIPT -->
 <script>
 // Lead Score Tracking Logic
 let currentLeadScore = 0;
 
+// Listen to storage events from Client Portal
 window.addEventListener('storage', function(e) {
     if (e.key === 'aetheris_owner_event' && e.newValue) {
         try {
             const data = JSON.parse(e.newValue);
-            logClientEvent(data);
+            handleLeadEvent(data);
         } catch (err) {
             console.error("Event parse error:", err);
         }
     }
 });
 
-function logClientEvent(eventObj) {
+function handleLeadEvent(eventObj) {
     let message = "";
     let scoreBoost = 0;
 
-    // Calculate Dynamic Intent Score
     switch(eventObj.type) {
         case 'AI_CONCIERGE_QUERY':
             scoreBoost = 10;
@@ -169,35 +167,24 @@ function logClientEvent(eventObj) {
             message = `[CLIENT EVENT]: ${JSON.stringify(eventObj.payload)}`;
     }
 
-    // Update Global Score
     currentLeadScore += scoreBoost;
     
-    console.log("LIVE EVENT CAPTURED:", message, "New Score:", currentLeadScore);
-    
-    // 1. Append to Terminal Log Box
+    // Append Log to Terminal Box
     const logBox = document.getElementById('ownerTerminal');
-    const logElement = document.createElement('div');
-    logElement.className = 'log-item';
-    logElement.style.color = currentLeadScore >= 70 ? '#f59e0b' : '#10b981'; // Gold/Orange on High Score
-    
-    let priorityTag = currentLeadScore >= 70 ? ' 🔥 [HIGH PRIORITY LEAD]' : '';
-    logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS)${priorityTag}`;
-    
     if (logBox) {
+        const logElement = document.createElement('div');
+        logElement.className = 'log-item';
+        
+        if (currentLeadScore >= 70) {
+            logElement.style.color = '#f59e0b'; // Gold
+            logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS) 🔥 [HIGH PRIORITY LEAD]`;
+        } else {
+            logElement.style.color = '#10b981'; // Green
+            logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS)`;
+        }
+        
         logBox.appendChild(logElement);
         logBox.scrollTop = logBox.scrollHeight;
     }
-
-    // 2. Update AI Score UI Badge on Dashboard
-    const scoreBadge = document.querySelector('.score-badge') || document.querySelector('td:nth-child(3)');
-    if (scoreBadge) {
-        scoreBadge.innerText = `${currentLeadScore}%`;
-        if (currentLeadScore >= 70) {
-            scoreBadge.style.color = '#ef4444';
-            scoreBadge.style.fontWeight = 'bold';
-        }
-    }
 }
 </script>
-
-</html>
