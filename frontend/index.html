@@ -1,190 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aetheris AI Solutions - Owner Control Center</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetheris AI Solutions - Executive Terminal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header-bar">
-    <div>
-      <h1 class="brand-title">Aetheris AI Solutions</h1>
-      <p style="font-size: 0.8rem; color: var(--text-muted);">Owner Suite & Executive Control Engine</p>
-    </div>
-    <span class="badge-status" id="systemHealthBadge">System Health: 100% Operational</span>
-  </header>
-
-  <!-- Main 6 Module Layout -->
-  <main class="grid-layout">
-    
-    <!-- Left Column: Modules 1, 2, 3, 4, 5, 6 Controls -->
-    <div>
-      <!-- Module 1 & 2: Lead Pipeline, WhatsApp Verification & CRM Push -->
-      <section class="card">
-        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.5rem;">
-          Modules 1 & 2: Auto-Outreach, WhatsApp Verification & AI Lead Scoring
-        </h2>
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
-          Track Intent Scores, Trigger WhatsApp Bot & Push to CRM / Calendar
-        </p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Lead Name</th>
-              <th>Budget</th>
-              <th>AI Score</th>
-              <th>WhatsApp Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>David Miller</strong><br><span style="color:var(--text-muted);">+1 (555) 019-2834</span></td>
-              <td style="color:var(--emerald-accent); font-weight:bold;">$4.5M</td>
-              <td><span style="color:var(--gold-primary); font-weight:bold;">92%</span></td>
-              <td><span style="color:var(--emerald-accent);">Verified ✓</span></td>
-              <td>
-                <button class="btn-gold" onclick="pushToCRM('L-101')">Push to CRM/Calendar</button>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Elena Rostova</strong><br><span style="color:var(--text-muted);">+1 (555) 014-9921</span></td>
-              <td style="color:var(--emerald-accent); font-weight:bold;">$12.0M</td>
-              <td><span style="color:var(--gold-primary); font-weight:bold;">68%</span></td>
-              <td id="status-L-102"><span style="color:#ef4444;">Pending</span></td>
-              <td>
-                <button class="btn-outline" onclick="triggerWhatsAppBot('L-102')">Verify via Bot</button>
-                <button class="btn-gold" onclick="pushToCRM('L-102')">Push CRM</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- Module 3, 4, 5, 6 Overview & Dynamic Controls -->
-      <section class="card">
-        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.8rem;">
-          Modules 3-6: Portal Control, Legal Audit, SOS Safety & Revenue Hub
-        </h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.8rem;">
-          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
-            <p style="color: var(--text-muted);">M3: Website AI Smart Portal</p>
-            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">Conversational AI Active</p>
-            <button class="btn-outline" onclick="triggerModuleAction(3)">Check Portal Status</button>
-          </div>
-
-          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
-            <p style="color: var(--text-muted);">M4: Legal & Compliance Audit</p>
-            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">RERA/US Legal Clear</p>
-            <button class="btn-outline" onclick="triggerModuleAction(4)">Run Legal Audit</button>
-          </div>
-
-          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
-            <p style="color: var(--text-muted);">M5: Agent SOS Safety Protocol</p>
-            <p style="font-weight: bold; color: var(--emerald-accent); margin-bottom: 0.5rem;">GPS Signal Active</p>
-            <button class="btn-danger" onclick="triggerModuleAction(5)">Ping SOS Test</button>
-          </div>
-
-          <div style="background: rgba(0,0,0,0.3); padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
-            <p style="color: var(--text-muted);">M6: Revenue & Escrow Hub</p>
-            <p style="font-weight: bold; color: var(--gold-primary); margin-bottom: 0.5rem;">$22.3M Pipeline Value</p>
-            <button class="btn-outline" onclick="triggerModuleAction(6)">Audit Escrow Vault</button>
-          </div>
+    <header class="header-bar">
+        <div>
+            <h1>Aetheris AI Solutions</h1>
+            <p>Owner Suite & Executive Control Engine</p>
         </div>
-      </section>
-    </div>
+        <div class="system-status">
+            <span class="status-dot"></span> System Health: 100% Operational
+        </div>
+    </header>
 
-    <!-- Right Column: Live Conversational AI Terminal -->
-    <div>
-      <section class="card">
-        <h2 style="font-size: 1.1rem; color: var(--gold-primary); margin-bottom: 0.5rem;">
-          AI System Log & Conversational Engine
-        </h2>
-        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
-          Real-time executive command interface
-        </p>
+    <main class="grid-layout">
+        <!-- Column 1: Modules -->
+        <div class="left-column">
+            <section class="card">
+                <h2>Modules 1 & 2: Auto-Outreach, WhatsApp Verification & AI Lead Scoring</h2>
+                <p class="subtitle">Track Intent Scores, Trigger WhatsApp Bot & Push to CRM / Calendar</p>
+                
+                <table class="lead-table">
+                    <thead>
+                        <tr>
+                            <th>LEAD NAME</th>
+                            <th>BUDGET</th>
+                            <th>AI SCORE</th>
+                            <th>WHATSAPP STATUS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>David Miller</strong><br><small>+1 (555) 019-2834</small></td>
+                            <td>$4.5M</td>
+                            <td><span class="score-badge">92%</span></td>
+                            <td><span class="status-verified">Verified ✓</span></td>
+                            <td><button class="btn-gold">Push to CRM/Calendar</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Elena Rostova</strong><br><small>+1 (555) 014-9921</small></td>
+                            <td>$12.0M</td>
+                            <td><span class="score-badge">68%</span></td>
+                            <td><span class="status-pending">Pending</span></td>
+                            <td>
+                                <button class="btn-outline">Verify via Bot</button>
+                                <button class="btn-gold">Push CRM</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
 
-        <div id="ownerTerminal" class="terminal-box">
-          <div class="log-item ai">[AETHERIS OS]: System initialized. All 6 Modules online.</div>
-          <div class="log-item">[AI CONVERSATIONAL]: Ready for Owner voice/text commands...</div>
+            <section class="card grid-2">
+                <div>
+                    <h3>M3: Website AI Smart Portal</h3>
+                    <p class="status-active">Conversational AI Active</p>
+                    <button class="btn-outline">Check Portal Status</button>
+                </div>
+                <div>
+                    <h3>M4: Legal & Compliance Audit</h3>
+                    <p class="status-active">RERA/US Legal Clear</p>
+                    <button class="btn-outline">Run Legal Audit</button>
+                </div>
+                <div>
+                    <h3>M5: Agent SOS Safety Protocol</h3>
+                    <p class="status-active">GPS Signal Active</p>
+                    <button class="btn-danger">Ping SOS Test</button>
+                </div>
+                <div>
+                    <h3>M6: Revenue & Escrow Hub</h3>
+                    <p class="gold-text">$22.3M Pipeline Value</p>
+                    <button class="btn-outline">Audit Escrow Vault</button>
+                </div>
+            </section>
         </div>
 
-        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-          <input type="text" id="ownerInput" placeholder="Command AI Engine..." style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 0.5rem; border-radius: 0.4rem; font-size: 0.8rem;" onkeypress="handleKeyPress(event)">
-          <button class="btn-gold" onclick="sendOwnerCommand()">Run</button>
+        <!-- Column 2: Terminal -->
+        <div class="right-column">
+            <section class="card">
+                <h2>AI System Log & Conversational Engine</h2>
+                <p class="subtitle">Real-time executive command interface</p>
+
+                <div id="ownerTerminal" class="terminal-box">
+                    <div class="log-item ai">[AETHERIS OS]: System initialized. All 6 Modules online.</div>
+                    <div class="log-item">[AI CONVERSATIONAL]: Ready for Owner voice/text commands...</div>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <input type="text" id="ownerInput" placeholder="Command AI Engine..." style="flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 0.5rem; border-radius: 0.4rem;">
+                    <button class="btn-gold" onclick="sendOwnerCommand()">Run</button>
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
+    </main>
 
-  </main>
-<script src="script.js"></script>
-<script>
-// Lead Score Tracking Logic
-let currentLeadScore = 0;
+    <script src="script.js"></script>
+    <script>
+    // Lead Score Tracking Engine
+    let currentLeadScore = 0;
 
-// Listen to storage events from Client Portal
-window.addEventListener('storage', function(e) {
-    if (e.key === 'aetheris_owner_event' && e.newValue) {
-        try {
-            const data = JSON.parse(e.newValue);
-            handleLeadEvent(data);
-        } catch (err) {
-            console.error("Event parse error:", err);
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'aetheris_owner_event' && e.newValue) {
+            try {
+                const data = JSON.parse(e.newValue);
+                handleLeadEvent(data);
+            } catch (err) {
+                console.error("Event parse error:", err);
+            }
+        }
+    });
+
+    function handleLeadEvent(eventObj) {
+        let message = "";
+        let scoreBoost = 0;
+
+        switch(eventObj.type) {
+            case 'AI_CONCIERGE_QUERY':
+                scoreBoost = 10;
+                message = `[CLIENT CONCIERGE]: Query Received -> "${eventObj.payload.query}"`;
+                break;
+            case 'VIP_SHOWING_BOOKED':
+                scoreBoost = 50;
+                message = `[CRM & CALENDAR SYNC]: VIP Tour Scheduled -> ${eventObj.payload.name}`;
+                break;
+            case '3D_WALKTHROUGH_LAUNCHED':
+                scoreBoost = 25;
+                message = `[3D ENGINE]: Spatial Tour Activated for ${eventObj.payload.property}`;
+                break;
+            case 'LEGAL_VAULT_ACCESSED':
+                scoreBoost = 40;
+                message = `[LEGAL VAULT]: Encrypted Package Requested`;
+                break;
+            case 'LANGUAGE_CHANGED':
+                scoreBoost = 5;
+                message = `[CLIENT PORTAL]: Switched language to ${eventObj.payload.language}`;
+                break;
+            default:
+                message = `[CLIENT EVENT]: ${JSON.stringify(eventObj.payload)}`;
+        }
+
+        currentLeadScore += scoreBoost;
+        
+        const logBox = document.getElementById('ownerTerminal');
+        if (logBox) {
+            const logElement = document.createElement('div');
+            logElement.className = 'log-item';
+            
+            if (currentLeadScore >= 70) {
+                logElement.style.color = '#f59e0b';
+                logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS) 🔥 [HIGH PRIORITY LEAD]`;
+            } else {
+                logElement.style.color = '#10b981';
+                logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS)`;
+            }
+            
+            logBox.appendChild(logElement);
+            logBox.scrollTop = logBox.scrollHeight;
         }
     }
-});
-
-function handleLeadEvent(eventObj) {
-    let message = "";
-    let scoreBoost = 0;
-
-    switch(eventObj.type) {
-        case 'AI_CONCIERGE_QUERY':
-            scoreBoost = 10;
-            message = `[CLIENT CONCIERGE]: Query Received -> "${eventObj.payload.query}"`;
-            break;
-        case 'VIP_SHOWING_BOOKED':
-            scoreBoost = 50;
-            message = `[CRM & CALENDAR SYNC]: VIP Tour Scheduled -> ${eventObj.payload.name}`;
-            break;
-        case '3D_WALKTHROUGH_LAUNCHED':
-            scoreBoost = 25;
-            message = `[3D ENGINE]: Spatial Tour Activated for ${eventObj.payload.property}`;
-            break;
-        case 'LEGAL_VAULT_ACCESSED':
-            scoreBoost = 40;
-            message = `[LEGAL VAULT]: Encrypted Package Requested`;
-            break;
-        case 'LANGUAGE_CHANGED':
-            scoreBoost = 5;
-            message = `[CLIENT PORTAL]: Switched language to ${eventObj.payload.language}`;
-            break;
-        default:
-            message = `[CLIENT EVENT]: ${JSON.stringify(eventObj.payload)}`;
-    }
-
-    currentLeadScore += scoreBoost;
-    
-    // Append Log to Terminal Box
-    const logBox = document.getElementById('ownerTerminal');
-    if (logBox) {
-        const logElement = document.createElement('div');
-        logElement.className = 'log-item';
-        
-        if (currentLeadScore >= 70) {
-            logElement.style.color = '#f59e0b'; // Gold
-            logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS) 🔥 [HIGH PRIORITY LEAD]`;
-        } else {
-            logElement.style.color = '#10b981'; // Green
-            logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message} (+${scoreBoost} PTS)`;
-        }
-        
-        logBox.appendChild(logElement);
-        logBox.scrollTop = logBox.scrollHeight;
-    }
-}
-</script>
+    </script>
+</body>
+</html>
