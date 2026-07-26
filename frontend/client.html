@@ -133,18 +133,31 @@
         }
 
         .chat-box {
-            height: 160px;
+            height: 180px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             background: #090a0f;
             margin-bottom: 12px;
             font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            width: 5px;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 4px;
+        }
+        .chat-box::-webkit-scrollbar-track {
+            background: #090a0f;
         }
 
         .chat-msg {
-            margin-bottom: 8px;
             word-break: break-word;
         }
 
@@ -160,6 +173,13 @@
             border-radius: 6px;
             margin-bottom: 8px;
             font-size: 0.85rem;
+        }
+
+        .status-msg {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            text-align: center;
+            min-height: 18px;
         }
     </style>
 </head>
@@ -204,6 +224,7 @@
                 <option value="On-Site VIP Private Tour">On-Site VIP Private Tour</option>
             </select>
             <button onclick="scheduleShowing()">Confirm VIP Showing</button>
+            <div class="status-msg" id="schedulerStatus" style="color: var(--success-green);"></div>
         </div>
 
         <!-- 3. AI Verified Legal & Escrow Vault -->
@@ -222,7 +243,8 @@
                 <span>Deed Clearance Draft</span>
                 <span style="color: var(--success-green);">✓ Ready</span>
             </div>
-            <button style="margin-top: 10px; background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold);" onclick="requestLegalAccess()">Request Encrypted Legal Package</button>
+            <button id="legalBtn" style="margin-top: 10px; background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold);" onclick="requestLegalAccess()">Request Encrypted Legal Package</button>
+            <div class="status-msg" id="vaultStatus" style="color: var(--accent-gold);"></div>
         </div>
     </div>
 
@@ -249,18 +271,18 @@
     </div>
 
     <script>
-        // Force Cross-Tab Event Sync
+        // Synchronizer that guarantees cross-tab firing in all browsers
         function emitOwnerEvent(type, payload) {
             const eventData = {
                 type: type,
                 payload: payload,
-                event_id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                event_id: Date.now() + '_' + Math.floor(Math.random() * 10000),
                 timestamp: new Date().toLocaleTimeString()
             };
-            // Remove previous item to force storage event trigger across browser tabs
+            
+            // Dispatch via LocalStorage
             localStorage.removeItem('aetheris_owner_event');
             localStorage.setItem('aetheris_owner_event', JSON.stringify(eventData));
-            console.log("Emitted Event:", eventData);
         }
 
         const translations = {
@@ -271,10 +293,10 @@
         };
 
         const aiResponses = {
-            en: "Query received. Analyzing portfolio ROI and syncing live records to Owner Suite.",
-            hi: "आपका प्रश्न प्राप्त हुआ। पोर्टफोलियो ROI का विश्लेषण किया जा रहा है और डेटा ओनर सूट में सिंक हो रहा है।",
-            es: "Consulta recibida. Analizando el ROI del portafolio y sincronizando con Owner Suite.",
-            ar: "تم استلام استفسارك. جاري تحليل العائد على الاستثمار ومزامنة البيانات."
+            en: "Query received. Syncing portfolio details to Owner Terminal.",
+            hi: "प्रश्न प्राप्त हुआ। विवरण ओनर टर्मिनल में सिंक हो रहा है।",
+            es: "Consulta recibida. Sincronizando con el terminal del propietario.",
+            ar: "تم استلام استفسارك. جاري المزامنة مع محطة المالك."
         };
 
         function changeLanguage() {
@@ -288,9 +310,7 @@
         }
 
         function handleKeyPress(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
+            if (e.key === 'Enter') sendChatMessage();
         }
 
         function sendChatMessage() {
@@ -301,52 +321,55 @@
 
             if (!text) return;
 
-            // Render User Message
             chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Emit Event to Owner Terminal
             emitOwnerEvent('AI_CONCIERGE_QUERY', { query: text, language: lang });
-
-            // Clear Input
             input.value = '';
 
-            // AI Reply Dynamic
             setTimeout(() => {
                 const reply = aiResponses[lang] || aiResponses['en'];
                 chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge:</strong> ${reply}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 400);
+            }, 300);
         }
 
         function scheduleShowing() {
             const nameField = document.getElementById('clientName');
             const phoneField = document.getElementById('clientPhone');
+            const statusDiv = document.getElementById('schedulerStatus');
             const name = nameField.value.trim() || "VIP Guest";
             const phone = phoneField.value.trim();
             const type = document.getElementById('tourType').value;
 
             if(!phone) {
-                alert("Please enter a valid WhatsApp / Phone number for confirmation.");
-                phoneField.focus();
+                statusDiv.style.color = '#ef4444';
+                statusDiv.innerText = "✖ Please enter a phone/WhatsApp number.";
                 return;
             }
 
             emitOwnerEvent('VIP_SHOWING_BOOKED', { name, phone, tourType: type });
-            alert(`Showing Scheduled successfully! Confirmation dispatched to ${phone}.`);
+            
+            statusDiv.style.color = 'var(--success-green)';
+            statusDiv.innerText = `✓ Tour request synced to CRM for ${phone}`;
             
             nameField.value = '';
             phoneField.value = '';
+
+            setTimeout(() => { statusDiv.innerText = ''; }, 4000);
         }
 
         function trigger3DModel(propertyName) {
             emitOwnerEvent('3D_WALKTHROUGH_LAUNCHED', { property: propertyName });
-            alert(`Initializing 3D Spatial Engine for ${propertyName}...`);
+            alert(`Initializing 3D Spatial Engine for ${propertyName}... Event sent to Owner Terminal.`);
         }
 
         function requestLegalAccess() {
+            const statusDiv = document.getElementById('vaultStatus');
             emitOwnerEvent('LEGAL_VAULT_ACCESSED', { status: 'Encrypted Package Requested' });
-            alert("Legal vault access requested. Encrypted clearance pushed to Owner Terminal.");
+            
+            statusDiv.innerText = "✓ Access Request Pushed to Owner Terminal";
+            setTimeout(() => { statusDiv.innerText = ''; }, 4000);
         }
     </script>
 </body>
