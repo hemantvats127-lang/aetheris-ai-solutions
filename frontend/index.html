@@ -121,10 +121,10 @@
     </div>
 
   </main>
+<script src="script.js"></script>
 
-  <script src="script.js"></script>
-</body>
-// Cross-Tab Listener for Live Client Portal Events
+<!-- LIVE CROSS-TAB SYNC SCRIPT -->
+<script>
 window.addEventListener('storage', function(e) {
     if (e.key === 'aetheris_owner_event' && e.newValue) {
         try {
@@ -160,22 +160,20 @@ function logClientEvent(eventObj) {
 
     console.log("LIVE EVENT CAPTURED:", message);
     
-    // Find the Terminal Log Container (Right Side Dark Log Box)
-    const logBox = document.querySelector('.chat-box') || 
-                   document.querySelector('#systemLogs') || 
-                   document.querySelector('div[style*="background"]') || 
-                   document.body;
+    // Exact Owner Terminal Box Target
+    const logBox = document.getElementById('ownerTerminal');
 
     const logElement = document.createElement('div');
-    logElement.style.color = '#10b981'; // Vibrant Green for Live Sync
-    logElement.style.fontSize = '0.85rem';
-    logElement.style.marginTop = '6px';
-    logElement.style.fontFamily = 'monospace';
+    logElement.className = 'log-item';
+    logElement.style.color = '#10b981'; // Green color for live synced events
     logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message}`;
     
-    // Append to Log Window
     if (logBox) {
         logBox.appendChild(logElement);
         logBox.scrollTop = logBox.scrollHeight;
     }
 }
+</script>
+
+</body>
+</html>
