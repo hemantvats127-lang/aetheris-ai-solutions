@@ -124,3 +124,58 @@
 
   <script src="script.js"></script>
 </body>
+// Cross-Tab Listener for Live Client Portal Events
+window.addEventListener('storage', function(e) {
+    if (e.key === 'aetheris_owner_event' && e.newValue) {
+        try {
+            const data = JSON.parse(e.newValue);
+            logClientEvent(data);
+        } catch (err) {
+            console.error("Event parse error:", err);
+        }
+    }
+});
+
+function logClientEvent(eventObj) {
+    let message = "";
+    switch(eventObj.type) {
+        case 'AI_CONCIERGE_QUERY':
+            message = `[CLIENT CONCIERGE]: Query Received -> "${eventObj.payload.query}" (${(eventObj.payload.language || 'en').toUpperCase()})`;
+            break;
+        case 'VIP_SHOWING_BOOKED':
+            message = `[CRM & CALENDAR SYNC]: VIP Tour Scheduled -> Name: ${eventObj.payload.name} | Phone: ${eventObj.payload.phone} (${eventObj.payload.tourType})`;
+            break;
+        case '3D_WALKTHROUGH_LAUNCHED':
+            message = `[3D ENGINE]: Spatial Tour Activated for ${eventObj.payload.property}`;
+            break;
+        case 'LEGAL_VAULT_ACCESSED':
+            message = `[LEGAL VAULT]: Encrypted Package Requested by VIP Client`;
+            break;
+        case 'LANGUAGE_CHANGED':
+            message = `[CLIENT PORTAL]: Switched language to ${eventObj.payload.language}`;
+            break;
+        default:
+            message = `[CLIENT EVENT]: ${JSON.stringify(eventObj.payload)}`;
+    }
+
+    console.log("LIVE EVENT CAPTURED:", message);
+    
+    // Find the Terminal Log Container (Right Side Dark Log Box)
+    const logBox = document.querySelector('.chat-box') || 
+                   document.querySelector('#systemLogs') || 
+                   document.querySelector('div[style*="background"]') || 
+                   document.body;
+
+    const logElement = document.createElement('div');
+    logElement.style.color = '#10b981'; // Vibrant Green for Live Sync
+    logElement.style.fontSize = '0.85rem';
+    logElement.style.marginTop = '6px';
+    logElement.style.fontFamily = 'monospace';
+    logElement.innerText = `[${eventObj.timestamp || new Date().toLocaleTimeString()}] ${message}`;
+    
+    // Append to Log Window
+    if (logBox) {
+        logBox.appendChild(logElement);
+        logBox.scrollTop = logBox.scrollHeight;
+    }
+}
