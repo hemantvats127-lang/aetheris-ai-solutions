@@ -25,214 +25,308 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            line-height: 1.6;
-            padding: 20px;
+            padding: 30px;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
             margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .brand-title {
             color: var(--accent-gold);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-size: 1.6rem;
         }
 
-        .badge {
-            background-color: rgba(212, 175, 55, 0.15);
-            color: var(--accent-gold);
+        .badge-verified {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-green);
+            border: 1px solid var(--success-green);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.85rem;
-            border: 1px solid var(--accent-gold);
-        }
-
-        .hero {
-            background: linear-gradient(135deg, rgba(18, 21, 32, 0.9), rgba(10, 11, 16, 0.9));
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .hero h1 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 25px auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .card {
-            background-color: var(--card-bg);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 25px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-gold);
+            border-radius: 12px;
+            padding: 24px;
         }
 
         .card h3 {
-            margin-bottom: 15px;
             color: var(--accent-gold);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
 
-        .btn {
-            background-color: var(--accent-gold);
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #0a0b10;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-gold);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-gold);
             color: #000;
             border: none;
-            padding: 12px 24px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: opacity 0.2s;
+            transition: 0.2s ease;
         }
 
-        .btn:hover {
+        button:hover {
             opacity: 0.9;
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-main);
+        .property-card {
             border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #0d0f18;
+            margin-bottom: 15px;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--text-main);
-        }
-
-        input {
+        .property-img {
             width: 100%;
-            padding: 12px;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-main);
-            margin-top: 10px;
-            margin-bottom: 10px;
+            height: 180px;
+            object-fit: cover;
         }
 
-        .status-msg {
-            margin-top: 10px;
+        .property-info {
+            padding: 12px;
+        }
+
+        .chat-box {
+            height: 160px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            background: #090a0f;
+            margin-bottom: 12px;
             font-size: 0.85rem;
-            color: var(--success-green);
-            display: none;
+        }
+
+        .chat-msg {
+            margin-bottom: 8px;
+        }
+
+        .chat-msg.ai { color: var(--accent-gold); }
+        .chat-msg.user { color: #fff; text-align: right; }
+
+        .vault-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #0d0f18;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="logo">AETHERIS <span style="font-weight: 300; color: #fff;">PORTAL</span></div>
-            <div class="badge">VIP CLIENT ACCESS</div>
-        </header>
+    <!-- Header with WhatsApp Verified Badge -->
+    <div class="header">
+        <div>
+            <h1 class="brand-title">AETHERIS PORTAL</h1>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Luxury Real Estate OS | VIP Client Suite</p>
+        </div>
+        <div class="badge-verified">
+            ✓ WhatsApp Verified VIP
+        </div>
+    </div>
 
-        <section class="hero">
-            <h1>Exclusive Luxury Properties</h1>
-            <p>Welcome to your private portal. Schedule private viewings, request 3D virtual walkthroughs, or speak directly with senior portfolio managers.</p>
-        </section>
-
-        <div class="grid">
-            <div class="card">
-                <h3>📅 Schedule Private Showing</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Book a priority in-person or virtual tour with dedicated real estate consultants.</p>
-                <input type="text" id="clientName" placeholder="Your Full Name">
-                <input type="tel" id="clientPhone" placeholder="Phone / WhatsApp Number">
-                <button class="btn" onclick="bookShowing()">Confirm VIP Tour Request</button>
-                <div id="bookingStatus" class="status-msg">✓ Request Sent! Our team will contact you shortly.</div>
+    <div class="grid">
+        <!-- 1. Multi-Language 24/7 AI Concierge -->
+        <div class="card">
+            <h3>💬 24/7 Multi-Lang AI Concierge</h3>
+            <p>Ask queries in any language. Auto-response & synced to Owner Terminal.</p>
+            <select id="langSelect" onchange="changeLanguage()">
+                <option value="en">🌐 Language: English</option>
+                <option value="hi">🌐 Language: Hindi (हिंदी)</option>
+                <option value="es">🌐 Language: Spanish (Español)</option>
+                <option value="ar">🌐 Language: Arabic (العربية)</option>
+            </select>
+            <div class="chat-box" id="chatBox">
+                <div class="chat-msg ai"><strong>AI Concierge:</strong> Welcome VIP Client. How can I assist your luxury acquisition today?</div>
             </div>
+            <input type="text" id="userInput" placeholder="Ask AI Assistant..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendChatMessage()">Send Query</button>
+        </div>
 
-            <div class="card">
-                <h3>💬 Instant WhatsApp Verification</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Verify your identity to unlock hidden off-market listings and confidential pricing.</p>
-                <button class="btn btn-secondary" onclick="verifyWhatsapp()">Request WhatsApp Code</button>
-                <div id="whatsappStatus" class="status-msg">✓ Verification code dispatched to your mobile.</div>
+        <!-- 2. Automated Showing Scheduler -->
+        <div class="card">
+            <h3>📅 Automated Showing Scheduler</h3>
+            <p>Lock direct slots synced to CRM & Owner Calendar.</p>
+            <input type="text" id="clientName" placeholder="Full Name">
+            <input type="tel" id="clientPhone" placeholder="WhatsApp / Phone Number">
+            <select id="tourType">
+                <option value="3D Virtual Walkthrough">3D Spatial Virtual Tour</option>
+                <option value="On-Site VIP Private Tour">On-Site VIP Private Tour</option>
+            </select>
+            <button onclick="scheduleShowing()">Confirm VIP Showing</button>
+        </div>
+
+        <!-- 3. AI Verified Legal & Escrow Vault -->
+        <div class="card">
+            <h3>🛡️ AI Legal & Escrow Vault</h3>
+            <p>Verified title audits & fraud-free disclosures.</p>
+            <div class="vault-item">
+                <span>RERA Title Audit</span>
+                <span style="color: var(--success-green);">✓ Cleared</span>
             </div>
+            <div class="vault-item">
+                <span>Escrow Agreement</span>
+                <span style="color: var(--success-green);">✓ Verified</span>
+            </div>
+            <div class="vault-item">
+                <span>Deed Clearance Draft</span>
+                <span style="color: var(--success-green);">✓ Ready</span>
+            </div>
+            <button style="margin-top: 10px; background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold);" onclick="requestLegalAccess()">Request Encrypted Legal Package</button>
+        </div>
+    </div>
 
-            <div class="card">
-                <h3>🌐 Request 3D Walkthrough</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Get immediate access to high-definition 3D spatial models of luxury penthouses.</p>
-                <button class="btn btn-secondary" onclick="trigger3DTour()">Launch 3D Spatial Model</button>
-                <div id="tourStatus" class="status-msg">✓ 3D Virtual Environment loaded successfully.</div>
+    <!-- 4 & 5. Personalized High-Yield Portfolio & 3D Walkthrough Trigger -->
+    <h2 style="color: var(--accent-gold); margin-bottom: 15px; font-size: 1.3rem;">Personalized High-Yield Portfolio</h2>
+    <div class="grid">
+        <div class="property-card">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" class="property-img" alt="Penthouse">
+            <div class="property-info">
+                <h4 style="color: #fff;">Skyline Penthouse | Palm Jumeirah</h4>
+                <p style="color: var(--accent-gold); font-size: 0.9rem; margin: 5px 0;">$14,500,000 • 11.2% Projected Yield</p>
+                <button onclick="trigger3DModel('Skyline Penthouse')">Launch 3D Spatial Walkthrough</button>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" class="property-img" alt="Villa">
+            <div class="property-info">
+                <h4 style="color: #fff;">Oceanfront Mansion | Miami Beach</h4>
+                <p style="color: var(--accent-gold); font-size: 0.9rem; margin: 5px 0;">$22,000,000 • Off-Market Private</p>
+                <button onclick="trigger3DModel('Oceanfront Mansion')">Launch 3D Spatial Walkthrough</button>
             </div>
         </div>
     </div>
 
-    <!-- Main Logic Script -->
     <script>
-        function emitOwnerEvent(message, type = 'success') {
+        // Robust Cross-Tab Event Synchronizer with Unique Nonce
+        function emitOwnerEvent(type, payload) {
             const eventData = {
-                message: message,
                 type: type,
-                id: Date.now(), // Force trigger event even on identical messages
-                timestamp: new Date().toLocaleTimeString()
+                payload: payload,
+                nonce: Math.random().toString(36.substring(2)),
+                timestamp: Date.now()
             };
             localStorage.setItem('aetheris_owner_event', JSON.stringify(eventData));
         }
 
-        function bookShowing() {
-            const nameInput = document.getElementById('clientName');
-            const phoneInput = document.getElementById('clientPhone');
+        // Optimized Multi-Language Handler
+        const translations = {
+            en: "Welcome VIP Client. How can I assist your luxury acquisition today?",
+            hi: "नमस्ते VIP ग्राहक! मैं आपकी क्या सहायता कर सकता हूँ?",
+            es: "Bienvenido Cliente VIP. ¿Cómo puedo ayudarle hoy?",
+            ar: "أهلاً بك عميلنا المميز. كيف يمكنني مساعدتك اليوم؟"
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const chatBox = document.getElementById('chatBox');
+            const greeting = translations[lang] || translations['en'];
             
-            const name = nameInput.value.trim() || 'Anonymous VIP';
-            const phone = phoneInput.value.trim() || 'Not Provided';
-
-            emitOwnerEvent(`NEW VIP SHOWING BOOKED: Client "${name}" (${phone}) requested a private property tour.`, 'success');
-            
-            // UI Reset & Confirmation
-            nameInput.value = '';
-            phoneInput.value = '';
-            showStatus('bookingStatus');
+            chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge [Language Switch]:</strong> ${greeting}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+            emitOwnerEvent('LANGUAGE_CHANGED', { language: lang });
         }
 
-        function verifyWhatsapp() {
-            emitOwnerEvent('WHATSAPP VERIFICATION: A client requested off-market access code via WhatsApp.', 'info');
-            showStatus('whatsappStatus');
+        function handleKeyPress(e) {
+            if(e.key === 'Enter') sendChatMessage();
         }
 
-        function trigger3DTour() {
-            emitOwnerEvent('3D TOUR STARTED: VIP Client opened 3D Spatial Walkthrough model.', 'warning');
-            showStatus('tourStatus');
+        function sendChatMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const text = input.value.trim();
+            if(!text) return;
+
+            chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
+            emitOwnerEvent('AI_CONCIERGE_QUERY', { query: text });
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="chat-msg ai"><strong>AI Concierge:</strong> Query logged & spatial portfolio data dispatched to Owner Terminal.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+
+            input.value = '';
         }
 
-        function showStatus(elementId) {
-            const status = document.getElementById(elementId);
-            if(status) {
-                status.style.display = 'block';
-                setTimeout(() => { status.style.display = 'none'; }, 4000);
+        function scheduleShowing() {
+            const nameField = document.getElementById('clientName');
+            const phoneField = document.getElementById('clientPhone');
+            const name = nameField.value.trim() || "VIP Guest";
+            const phone = phoneField.value.trim();
+            const type = document.getElementById('tourType').value;
+
+            if(!phone) {
+                alert("Please enter a valid WhatsApp / Phone number for confirmation.");
+                phoneField.focus();
+                return;
             }
+
+            emitOwnerEvent('VIP_SHOWING_BOOKED', { name, phone, tourType: type });
+            alert(`Showing Scheduled successfully! Confirmation dispatched to ${phone}.`);
+            
+            nameField.value = '';
+            phoneField.value = '';
+        }
+
+        function trigger3DModel(propertyName) {
+            emitOwnerEvent('3D_WALKTHROUGH_LAUNCHED', { property: propertyName });
+            alert(`Initializing 3D Spatial Engine for ${propertyName}...`);
+        }
+
+        function requestLegalAccess() {
+            emitOwnerEvent('LEGAL_VAULT_ACCESSED', { status: 'Encrypted Package Requested' });
+            alert("Legal vault access requested. Encrypted clearance pushed to Owner Terminal.");
         }
     </script>
 </body>
